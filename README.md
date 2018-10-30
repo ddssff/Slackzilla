@@ -5,7 +5,7 @@ Slack/Mattermost whenever a user changes a bug.
 
 ## Instructions
 
-1. Clone this project into your bugzilla extensions directory. Don't worry, the
+1. Clone this project into your bugzilla extensions directory (/var/www/html/bugzilla/extensions). Don't worry, the
 	_disabled_ file will prevent the extension from being loaded (which is wise,
 	since you need to configure it first).
 1. Get an incoming webhook token (copy the full URL) and put it in

@@ -22,12 +22,12 @@ our $VERSION = '0.01';
 
 # TODO: Inject a form in the admin panel where these can be set:
 my %CONFIG = (
-	#slackURI => 'https://mattermost.example.org/hooks/somewhatLongH4sh',
+	slackURI => 'https://hooks.slack.com/services/xxx',
 	username => 'bugzilla',
 	# Channel is optional when using Mattermost, in which case the 
-	#channel => 'devchat',
+	channel => '#general',
 	#iconURI => 'http://my.fancy/icon.png/',
-	#bugzillaURI => 'http://bugs.example.org/',
+	bugzillaURI => 'http://foxthompson.asuscomm.com/bugzilla/',
 );
 
 my $userAgent = LWP::UserAgent->new();
@@ -76,30 +76,30 @@ sub bug_end_of_update {
 	my %attachment = (
 		# The Slack link syntax does not work in Mattermost. Use Markdown
 		# instead:
-		#fallback => "<$link|Bug $id> ($summary) in $product/$component changed",
-		#pretext => "<$link|Bug $id> in $product/$component changed",
-		fallback => "[Bug $id]($link) ($summary) in $product/$component changed",
-		pretext => "[Bug $id]($link) in $product/$component changed",
+		fallback => "<$link|Bug $id> ($summary) in $product/$component changed",
+		pretext => "<$link|Bug $id> in $product/$component changed",
+		#fallback => "[Bug $id]($link) ($summary) in $product/$component changed",
+		#pretext => "[Bug $id]($link) in $product/$component changed",
 		title => $summary,
 		title_link => $link,
 		# %$changes may be empty (when a comment is added, for instance). Not
 		# sure what to write … so let's just be honest and write just that:
 		text => "$user changed " . (%$changes ? join(', ', keys %$changes) : 
-			'… something') . "\n\n$lastComment",
-		fields => [
-			{
-				title => 'Assigned to',
-				# The Slack link syntax does not work in Mattermost. Use Markdown
-				# instead:
-				#value => "<mailto:$assignedToEMail|$assignedTo>",
-				value => "[$assignedTo](mailto:$assignedToEMail)",
-				short => 'true',
-			},
-			{ title => 'Status', value => $status, short => 'true' },
-			{ title => 'Severity', value => $severity, short => 'true' },
-			{ title => 'Version', value => $bug->version, short => 'true' },
-			{ title => 'Depends on', value => join(', ', @{$bug->dependson}), short => 'true' },
-		],
+			'… something'), # . "\n\n$lastComment",
+#		fields => [
+#			{
+#				title => 'Assigned to',
+#				# The Slack link syntax does not work in Mattermost. Use Markdown
+#				# instead:
+#				#value => "<mailto:$assignedToEMail|$assignedTo>",
+#				value => "[$assignedTo](mailto:$assignedToEMail)",
+#				short => 'true',
+#			},
+#			{ title => 'Status', value => $status, short => 'true' },
+#			{ title => 'Severity', value => $severity, short => 'true' },
+#			{ title => 'Version', value => $bug->version, short => 'true' },
+#			{ title => 'Depends on', value => join(', ', @{$bug->dependson}), short => 'true' },
+#		],
 	);
 
 	my %jsonObj = (
